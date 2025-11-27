@@ -8,24 +8,21 @@ namespace RealTimeChange.Controllers
     [ApiController]
     public class Value : ControllerBase
     {
-        private FeatureToggleSettings _currentSettings;
-        private readonly ILogger<Value> _logger;
+        private IOptionsMonitor<FeatureToggleSettings> _currentSettings;
 
-        public Value(IOptionsMonitor<FeatureToggleSettings> featureToggleMonitor, ILogger<Value> logger)
+        public Value(IOptionsMonitor<FeatureToggleSettings> featureToggleMonitor)
         {
-            _currentSettings = featureToggleMonitor.CurrentValue;
+            _currentSettings = featureToggleMonitor;
             featureToggleMonitor.OnChange(settings =>
             {
-                _currentSettings = settings;
-                Console.WriteLine($"FeatureXEnabled changed to: {settings.IsFeatureXEnabled}");
+                Console.WriteLine($"TestString changed to: {settings.Test}");
             });
-            _logger = logger;
         }
 
-        [HttpGet("isFeatureXEnabled")]
-        public bool IsFeatureXEnabled()
+        [HttpGet("teststring")]
+        public string IsFeatureXEnabled()
         {
-            return _currentSettings.IsFeatureXEnabled;
+            return _currentSettings.CurrentValue.Test;
         }
     }
 }

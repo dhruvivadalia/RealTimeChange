@@ -2,7 +2,6 @@
 {
     public class FeatureToggleSettings
     {
-        public bool IsFeatureXEnabled { get; set; }
-        public bool IsFeatureYEnabled { get; set; }
+        public string? Test { get; set; }
     }
 }
